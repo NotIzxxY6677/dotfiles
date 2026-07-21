@@ -1,0 +1,47 @@
+# Partial config: only overrides from dnscrypt-proxy defaults.
+# NOT a complete dnscrypt-proxy.toml — do not use standalone.
+
+###############################################################################
+#                             Global settings                                  #
+###############################################################################
+
+server_names = ['cloudflare', 'cloudflare-ipv6', 'quad9-doh-ip4-port443-nofilter-pri', 'quad9-doh-ip6-port443-nofilter-pri', 'nextdns-ultralow', 'controld-unfiltered', 'adguard-dns-unfiltered-doh']
+
+listen_addresses = ['127.0.0.1:53', '[::1]:53'] # Microsoft Windows
+listen_addresses = ['127.0.0.1:53'] # Linux
+
+###############################################################################
+#                            Server Selection                                  #
+###############################################################################
+
+ipv4_servers = true
+ipv6_servers = true
+dnscrypt_servers = false
+doh_servers = true
+odoh_servers = false
+require_dnssec = true
+require_nolog = true
+require_nofilter = true
+disabled_server_names = []
+
+###############################################################################
+#                           Connection Settings                                #
+###############################################################################
+
+http3 = true
+
+http3_probe = true
+
+###############################################################################
+#                        Load Balancing & Performance                          #
+###############################################################################
+
+lb_strategy = 'p2'
+lb_estimator = true
+
+###############################################################################
+#                                DNS Cache                                     #
+###############################################################################
+
+cache_size = 16384
+cache_min_ttl = 300
