@@ -1,17 +1,19 @@
 # Purpose: chronyd daemon command-line flags.
-# Scope: chronyd.service startup environment (/etc/sysconfig/chronyd).
+# Scope: chronyd.service startup environment (/etc/sysconfig/chronyd), read via
+#        EnvironmentFile=-/etc/sysconfig/chronyd; used by ExecStart chronyd $OPTIONS.
 # Dependencies: /var/lib/chrony/drift (for the -s flag).
 # Standard: chronyd(8).
 #
 # -s   Primary defense against the DNS-time deadlock. Floors the system clock
-#      at startup to the driftfile mtime ("last time chronyd ran") — before
-#      any hostname is resolved — so that TLS certificate validity checks
+#      at startup to the driftfile mtime ("last time chronyd ran") -- before
+#      any hostname is resolved -- so that TLS certificate validity checks
 #      (chronyd's own NTS-KE, and any TLS-based DNS transport the local
 #      resolver performs) can succeed even after a dead/reset RTC.
 #
 # -F 2 Seccomp system-call filter, level 2 (blocklist mode): blocks a small
 #      set of high-risk syscalls such as fork/exec. Unlike the level-1
 #      allowlist, it cannot kill chronyd on unexpected-but-benign libc/NSS
-#      syscalls, at the cost of a weaker sandbox.
-
+#      syscalls, at the cost of a weaker sandbox. (Fedora shipped chrony
+#      4.8-3 in Oct 2025 precisely because -F 1 could kill chronyd when using
+#      an NTS server with newer glibc -- another reason to prefer -F 2 here.)
 OPTIONS="-s -F 2"
