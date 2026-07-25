@@ -1,8 +1,8 @@
 # EMERGENCY: Wrong Clock on Boot, Time Will Not Sync
 
-Architecture reminder: apps → 127.0.0.53 (resolved stub) → 127.0.0.1:53 (dnscrypt-proxy, DoH/HTTP3) → upstream. A badly wrong clock breaks **DNS itself** (DoH X.509 validation) before chrony's NTS-KE is even attempted.
+Architecture reminder: apps -> 127.0.0.53 (resolved stub) -> 127.0.0.1:53 (dnscrypt-proxy, DoH/HTTP3) -> upstream. A badly wrong clock breaks **DNS itself** (DoH X.509 validation) before chrony's NTS-KE is even attempted.
 
-Recovery order is: **clock → resolver → time daemon → RTC**.
+Recovery order is: **clock -> resolver -> time daemon -> RTC**.
 
 ## 1) Confirm the Situation
 
