@@ -59,6 +59,7 @@ dns.google
 ### Quad9
 *Malware blocking, DNSSEC validation.*
 *No ECS on the default 9.9.9.9 service, to preserve anonymity. The 9.9.9.11 variant sends ECS if you want better CDN geo-routing at a small privacy cost.*
+*Unfiltered variant (what `90-dns-strict-policy.conf` in this repo actually uses): `9.9.9.10` / `149.112.112.10`, `2620:fe::10` / `2620:fe::fe:10`, TLS name `dns10.quad9.net`.*
 *DoH3 supported*
 
 **IPv4**
