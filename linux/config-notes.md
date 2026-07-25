@@ -36,14 +36,14 @@ sudo ethtool --show-eee enp8s0
 ```
 File > Settings > Output > Recording Tab:
 Output Mode: Advanced
-Recording(Type: Standard)
+Recording (Type: Standard)
 Recording Format: Matroska Video (.mkv)
 Video Encoder: FFmpeg VAAPI AV1
 Audio Encoder: FFmpeg Opus (Fallback: libfdk AAC, FFmpeg AAC)
 Encoder Settings:
 Rate Control: CQP
 File > Settings > Advanced
-Recording: Automatically remux to mp4 
+Recording: Automatically remux to mp4
 ```
 
 ## OBS Studio (Hardware Specific/Laptop-iGPU: Intel UHD Graphics 620 @ 1.15 GHz)
@@ -51,7 +51,7 @@ Recording: Automatically remux to mp4
 ```
 File > Settings > Output > Recording Tab:
 Output Mode: Advanced
-Recording(Type: Standard)
+Recording (Type: Standard)
 Recording Format: Matroska Video (.mkv)
 Video Encoder: QuickSync HEVC (Fallback: FFmpeg VAAPI HEVC)
 Audio Encoder: FFmpeg Opus (Fallback: libfdk AAC, FFmpeg AAC)
@@ -60,5 +60,5 @@ Rate Control: ICQ
 ICQ Quality: 23 (default) or 24 (Saves ~10-15% storage space)
 Target Usage: TU5: Fast
 File > Settings > Advanced
-Recording: Automatically remux to mp4 
+Recording: Automatically remux to mp4
 ```
