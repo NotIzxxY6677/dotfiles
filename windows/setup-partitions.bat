@@ -12,9 +12,18 @@ echo ===================================================
 echo.
 echo WARNING:
 echo This will COMPLETELY ERASE Disk %DISK%.
-echo Make absolutely sure the correct disk is selected.
 echo.
-pause
+echo Disks currently attached to this system:
+echo list disk | diskpart
+echo.
+echo Verify that Disk %DISK% above is the intended target (check size/type).
+set /p "CONFIRM=Type the disk number to erase, exactly, to continue: "
+if not "%CONFIRM%"=="%DISK%" (
+    echo.
+    echo Input "%CONFIRM%" does not match target Disk %DISK%. Aborting - no changes made.
+    pause
+    exit /b 1
+)
 
 echo Generating DiskPart script...
 
