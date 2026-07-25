@@ -1,8 +1,8 @@
 # EMERGENCY: Wrong Clock on Boot, Time Will Not Sync
 
-Architecture reminder: apps → resolver → chronyd (NTS). A badly wrong clock breaks **TLS validation itself** (DoT/NTS-KE X.509 validation) before chrony's time synchronization is even attempted.
+Architecture reminder: apps -> 127.0.0.53 (resolved stub) -> upstream DoT resolvers; chronyd syncs separately via NTS. A badly wrong clock breaks **TLS validation itself** (DoT/NTS-KE X.509 validation) before chrony's time synchronization is even attempted.
 
-Recovery order is: **clock → time daemon → RTC**.
+Recovery order is: **clock -> time daemon -> RTC**.
 
 ## 1) Confirm the Situation
 
