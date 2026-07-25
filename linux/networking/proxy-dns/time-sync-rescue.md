@@ -28,7 +28,7 @@ sudo date -s 'YYYY-MM-DD HH:MM:SS'
 (b) Or pull rough time from a plain-HTTP Date header (immune to the DNS/TLS deadlock):
 
 ```bash
-sudo date -s "$(curl -sI [http://1.1.1.1](http://1.1.1.1) | tr -d '\r' | sed -n 's/^[Dd]ate: //p')"
+sudo date -s "$(curl -sI http://1.1.1.1 | tr -d '\r' | sed -n 's/^[Dd]ate: //p')"
 ```
 
 ## 3) Revive the Resolver
