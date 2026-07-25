@@ -25,7 +25,7 @@ sudo date -s 'YYYY-MM-DD HH:MM:SS'
 (b) Or pull rough time from a plain-HTTP Date header (immune to the DNS/TLS deadlock). Any reachable HTTP server IP (including your gateway) works:
 
 ```bash
-sudo date -s "$(curl -sI [http://1.1.1.1](http://1.1.1.1) | tr -d '\r' | sed -n 's/^[Dd]ate: //p')"
+sudo date -s "$(curl -sI http://1.1.1.1 | tr -d '\r' | sed -n 's/^[Dd]ate: //p')"
 ```
 
 ## 3) Force Chrony to Re-resolve and Sync
