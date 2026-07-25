@@ -17,7 +17,7 @@ winget install -e --id=Microsoft.DotNet.AspNetCore.8
 winget install -e --id=Microsoft.DotNet.Runtime.10
 winget install -e --id=Microsoft.DotNet.DesktopRuntime.10
 winget install -e --id=Microsoft.DotNet.AspNetCore.10
-winget install -e --id Azul.ZuluFX.8.JDK
+winget install -e --id=Azul.ZuluFX.8.JDK
 winget install -e --id=M2Team.NanaZip 
 winget install -e --id=Mozilla.Firefox 
 winget install -e --id=Google.Chrome 
