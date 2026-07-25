@@ -4,7 +4,7 @@
 1. F5 (Preferences) > Filter Control > Filter Priority (Overall)
 2. Add registered filter > Add these 3 and set to "Prefer":
    - LAV Splitter Source
-   - LAV Video Decoder ( Double-click -> Hardware Decoder to use: D3D11 -> Hardware Device to use: Automatic(Native) )
+   - LAV Video Decoder ( Double-click -> Hardware Decoder to use: D3D11 -> Hardware Device to use: Automatic (Native) )
    - LAV Audio Decoder ( Double-click -> Mixing -> If using Headphones/Stereo Speakers: Enable Mixing -> Stereo -> Check "Don't mix Stereo Sources". *Leave unchecked if using true surround sound or Virtual 3D spatial software* )
 
 ## Windows Recommended Changes (Navigation based on Windows 11 Pro):
