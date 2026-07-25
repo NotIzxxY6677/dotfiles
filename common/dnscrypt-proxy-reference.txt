@@ -7,8 +7,11 @@
 
 server_names = ['cloudflare', 'cloudflare-ipv6', 'quad9-doh-ip4-port443-nofilter-pri', 'quad9-doh-ip6-port443-nofilter-pri', 'nextdns-ultralow', 'controld-unfiltered', 'adguard-dns-unfiltered-doh']
 
-listen_addresses = ['127.0.0.1:53', '[::1]:53'] # Microsoft Windows
-listen_addresses = ['127.0.0.1:53'] # Linux
+# For Microsoft Windows
+# listen_addresses = ['127.0.0.1:53', '[::1]:53']
+
+# For Linux
+listen_addresses = ['127.0.0.1:53']
 
 ###############################################################################
 #                            Server Selection                                  #
