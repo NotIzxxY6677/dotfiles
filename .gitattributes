@@ -1,6 +1,0 @@
-# Normalize line endings. Windows-executed files must check out as CRLF:
-# cmd.exe batch parsing and regedit imports are unreliable with LF-only
-# input, and relying on each client's core.autocrlf is fragile.
-* text=auto
-*.bat text eol=crlf
-*.reg text eol=crlf

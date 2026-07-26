@@ -12,7 +12,7 @@ windows/   Windows post-install: GPO privacy settings, winget app lists, disk se
 
 ### common/
 
-- `dnscrypt-proxy-reference.txt` — Partial `dnscrypt-proxy.toml` (overrides from defaults only; not a standalone config). Selects DoH/DoH3 resolvers requiring DNSSEC, no-log, and no-filter policies, with listen addresses for Linux (active) and Windows (commented).
+- `dnscrypt-proxy-reference.txt` — Partial `dnscrypt-proxy.toml` (overrides from defaults only; not a standalone config). Selects DoH/DoH3 resolvers requiring DNSSEC, no-log, and no-filter policies, with commented listen addresses for both Linux and Windows.
 - `privacy-dns-ntp-reference.md` — Curated public DNS resolvers (Cloudflare, Google, Quad9) with their encrypted-transport endpoints and ECS behavior, plus NTP servers split into NTS-capable non-smearing sources and leap-smearing sources.
 
 ### linux/
@@ -27,25 +27,10 @@ Each variant ships a matching `time-sync-rescue.md` runbook for the cold-boot de
 Shared pieces:
 
 - `networking/90-disable-nm-dns.conf` — NetworkManager drop-in that removes NM from the DNS path entirely (`dns=none`, no D-Bus pushes to resolved).
-- `networking/99-net-transport-optimization.conf` — sysctl drop-in for the measured link (~500 Mbit/s fibre, ~3.4 ms RTT, BDP ≈ 214 KB): MTU black-hole probing and `tcp_notsent_lowat`. Buffer ceilings and congestion control deliberately stay on kernel defaults, which already exceed the BDP many times over; BBR + fq and future-VPN (WARP/WireGuard) MTU/MSS notes are kept commented in the file.
+- `networking/99-net-transport-optimization.conf` — sysctl drop-in: BBR + fq, MTU probing, `tcp_notsent_lowat`, and raised buffer ceilings for QUIC/DoH3 (~500 Mbps profile).
 - `networking/nts/` — chrony configured for NTS-only, non-smearing time sync (`chrony.conf`) plus the matching `/etc/sysconfig/chronyd` flags file (`-s -F 2`) that defends against the DNS↔time deadlock.
-- `install.sh` — Idempotent placement of the files above (see the deployment map): installs only what differs, restores SELinux labels, reloads only affected services.
 - `fedora-kde-debloat.sh` — One-shot removal of unneeded preinstalled KDE/Fedora apps.
 - `config-notes.md` — Hardware-specific notes (Jellyfin via Podman, EEE disable, OBS encoder settings).
-
-#### Deployment map (manual)
-
-Both hosts (desktop, laptop) receive identical files; nothing is per-machine. `linux/install.sh encrypted-dns` or `linux/install.sh proxy-dns` places everything below idempotently, or copy by hand:
-
-| Repo file (under `linux/`) | Destination | Apply |
-|---|---|---|
-| `networking/90-disable-nm-dns.conf` | `/etc/NetworkManager/conf.d/` | `systemctl reload NetworkManager` |
-| `networking/encrypted-dns/90-dns-strict-policy.conf` **or** `networking/proxy-dns/90-dns-bridge-policy.conf` — one, never both | `/etc/systemd/resolved.conf.d/` | `systemctl restart systemd-resolved` |
-| `networking/99-net-transport-optimization.conf` | `/etc/sysctl.d/` | `sysctl -p /etc/sysctl.d/99-net-transport-optimization.conf` (reboot to *unset* removed keys) |
-| `networking/nts/chrony.conf` | `/etc/chrony.conf` | `systemctl restart chronyd` |
-| `networking/nts/chronyd` | `/etc/sysconfig/chronyd` | `systemctl restart chronyd` |
-
-`fedora-kde-debloat.sh` is run once, not placed. SELinux note: files *created* under `/etc` (as `install`/`cp` do) inherit correct labels; after a `mv`, run `restorecon -v <dest>`.
 
 ### windows/
 

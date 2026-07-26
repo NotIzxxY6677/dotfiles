@@ -3,13 +3,6 @@ setlocal
 
 title 192 GiB Windows Configuration Tool
 
-net session >nul 2>&1
-if errorlevel 1 (
-    echo This script must be run as Administrator. Aborting - no changes made.
-    pause
-    exit /b 1
-)
-
 set "DISK=1"
 set "SCRIPT=%TEMP%\diskpart_script.txt"
 
@@ -52,21 +45,8 @@ echo Generating DiskPart script...
 echo.
 echo Running DiskPart...
 diskpart /s "%SCRIPT%"
-set "DPEXIT=%ERRORLEVEL%"
 
 if exist "%SCRIPT%" del "%SCRIPT%"
-
-if not "%DPEXIT%"=="0" (
-    echo.
-    echo ===================================================
-    echo      DiskPart FAILED with exit code %DPEXIT%.
-    echo      Review the output above - the disk may be
-    echo      left partially configured.
-    echo ===================================================
-    echo.
-    pause
-    exit /b %DPEXIT%
-)
 
 echo.
 echo ===================================================
