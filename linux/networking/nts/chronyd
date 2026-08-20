@@ -1,19 +1,23 @@
-# Purpose: chronyd daemon command-line flags.
-# Scope: chronyd.service startup environment (/etc/sysconfig/chronyd), read via
-#        EnvironmentFile=-/etc/sysconfig/chronyd; used by ExecStart chronyd $OPTIONS.
+# Purpose: Command-line flags for the chronyd daemon.
+# Scope: Startup environment of chronyd.service (/etc/sysconfig/chronyd). It
+#        is read through EnvironmentFile=-/etc/sysconfig/chronyd and used by
+#        ExecStart as chronyd $OPTIONS.
 # Dependencies: /var/lib/chrony/drift (for the -s flag).
 # Standard: chronyd(8).
 #
-# -s   Primary defense against the DNS-time deadlock. Floors the system clock
-#      at startup to the driftfile mtime ("last time chronyd ran") -- before
-#      any hostname is resolved -- so that TLS certificate validity checks
-#      (chronyd's own NTS-KE, and any TLS-based DNS transport the local
-#      resolver performs) can succeed even after a dead/reset RTC.
+# -s   The main defense against the deadlock between DNS and time. At startup
+#      it puts a floor under the system clock at the modification time of the
+#      drift file, that is, the last time chronyd ran, and it does so before
+#      any hostname is resolved. TLS certificate validity checks can then
+#      succeed even after the RTC has died or been reset. This covers
+#      chronyd's own NTS-KE connections and any TLS-based DNS transport that
+#      the local resolver uses.
 #
-# -F 2 Seccomp system-call filter, level 2 (blocklist mode): blocks a small
-#      set of high-risk syscalls such as fork/exec. Unlike the level-1
-#      allowlist, it cannot kill chronyd on unexpected-but-benign libc/NSS
-#      syscalls, at the cost of a weaker sandbox. (Fedora shipped chrony
-#      4.8-3 in Oct 2025 precisely because -F 1 could kill chronyd when using
-#      an NTS server with newer glibc -- another reason to prefer -F 2 here.)
+# -F 2 System call filter (seccomp) at level 2, which is a blocklist. It
+#      blocks a small set of high-risk system calls such as fork and exec.
+#      Unlike the level 1 allowlist, it cannot kill chronyd when libc or NSS
+#      makes an unexpected but harmless system call, at the cost of a weaker
+#      sandbox. Fedora shipped chrony 4.8-3 in October 2025 because -F 1
+#      could kill chronyd when an NTS server was used with a newer glibc,
+#      which is another reason to prefer -F 2 here.
 OPTIONS="-s -F 2"
