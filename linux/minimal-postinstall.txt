@@ -1,1 +1,3 @@
+Fedora Custom Operating System > Common NetworkManager SubModules + Standard + KDE
+
 sudo dnf group install hardware-support
